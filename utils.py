@@ -19,6 +19,31 @@ def eval_state(state: list, playing_as: str):
         return GameResult.LOSS
 
 
+def get_winner(state, player_1, player_2):
+    player_1_res = eval_state(state, player_1.play_as)
+    if player_1_res == GameResult.WIN:
+        return player_1.name
+    elif player_1_res == GameResult.LOSS:
+        return player_2.name
+    elif player_1_res == GameResult.DRAW:
+        return GameResult.DRAW.value
+    else:
+        return None
+
+
+def print_game_state(state):
+    for i in range(len(state)):
+        for j in range(len(state[i])):
+            mark = " " if state[i][j] == "" else state[i][j]
+
+            if j != len(state[i]) - 1:
+                print(mark, end=" | ")
+            else:
+                print(mark)
+        if i != len(state) - 1:
+            print("---" * len(state[i]))
+
+
 def calculate_winner(state: list):
     if len(state) != BOARD_LENGTH:
         raise ValueError("invalid state")
